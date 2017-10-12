@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 unsigned replace_byte(unsigned x, int i, unsigned char b){
-    unsigned char *u = &x;
+    unsigned char *u = (unsigned char*)&x;
     u[i] = b;
     return x;
 }

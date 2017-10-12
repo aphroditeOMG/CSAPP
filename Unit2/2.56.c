@@ -39,11 +39,12 @@ int main(void){
 void test_int(){
     int i;
     int x;
-    for(i = 0x1; i < 0xf; i++){
+    printf("this is the test on show_int:\n");
+    for(i = 0x0; i < 0xf; i++){
           x = i;
           show_int(x);
     }
-    for(i = 0xffff1; i < 0xfffff; i++){
+    for(i = 0xfffffff1; i < 0xffffffff; i++){
           x = i;
           show_int(x);
     }
