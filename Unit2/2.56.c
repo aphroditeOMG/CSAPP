@@ -3,23 +3,29 @@
 typedef unsigned char *byte_pointer;
 
 void show_bytes(byte_pointer start, size_t len) {
- size_t i;
- for(i = 0; i < len; i++)
+    size_t i;
+    for(i = 0; i < len; i++)
         printf(" %.2x",start[i]);
- printf("\n");
+    printf("\n");
 }
 
 void show_int(int x){
-show_bytes((byte_pointer) &x, sizeof(int));
+    show_bytes((byte_pointer) &x, sizeof(int));
 }
 
 void show_float(float x){
-show_bytes((byte_pointer) &x, sizeof(float));
+    show_bytes((byte_pointer) &x, sizeof(float));
 }
 
 void show_pointer(void *x){
-show_bytes((byte_pointer) &x, sizeof(void *));
+    show_bytes((byte_pointer) &x, sizeof(void *));
 }
+
+void test_int();
+
+void test_float();
+
+void test_byte();
 
 int main(void){
     test_int();
@@ -46,7 +52,7 @@ void test_int(){
 void test_float(){
     int i;
     float u = 0.0222;
-    for(i = 0; i < 10; i++){
+    for(i = 0; i < 10; i++) {
         show_float(u++);
     }
 }
@@ -55,7 +61,7 @@ void test_byte(){
     int i;
     char m[10];
     show_pointer(m);
-    for( i = 0; i < 10; i++){
-            show_pointer(m[i]);
+    for (i = 0; i < 10; i++) {
+            show_pointer( &m[i]);
     }
 }
