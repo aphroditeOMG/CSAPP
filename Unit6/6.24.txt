@@ -1,0 +1,12 @@
+ANS:
+
+T (avg seek) = 4ms
+T (max rotation) = 4ms
+T (avg rotation) = 2ms
+
+2MB / 512 => 4000 
+1.
+T (avg seek) + T(avg rotation) + 4*T(max rotation) = 4 + 2 + 4 * 4 = 22ms;
+
+2.
+(T (avg seek) + T(avg rotation)) * 4000 = 24s;

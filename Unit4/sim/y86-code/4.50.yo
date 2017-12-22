@@ -1,0 +1,81 @@
+                            | # Execution begins at address 0
+0x000:                      |         .pos 0
+0x000: 30f40003000000000000 |         irmovq stack,%rsp
+0x00a: 809400000000000000   |         call main
+0x013: 00                   |         halt
+                            | 
+                            | # Array of Address
+0x014:                      | address:
+0x014: 2601000000000000     | 	.quad	L0	
+0x01c: 5f01000000000000     | 	.quad	L3
+0x024: 3901000000000000     | 	.quad	L1
+0x02c: 4c01000000000000     | 	.quad	L2
+0x034: 5f01000000000000     | 	.quad	L3
+0x03c: 3901000000000000     | 	.quad	L1
+                            | 
+                            | # Array of what to test
+0x044:                      | test:
+0x044: 0000000000000000     | 	.quad	0x0
+0x04c: 0000000000000000     | 	.quad	0x0
+0x054: 0000000000000000     | 	.quad	0x0
+0x05c: 0000000000000000     | 	.quad	0x0
+0x064: 0000000000000000     | 	.quad	0x0
+0x06c: 0000000000000000     | 	.quad	0x0
+0x074: 0000000000000000     | 	.quad	0x0
+0x07c: 0000000000000000     | 	.quad	0x0
+0x084: 0000000000000000     | 	.quad	0x0
+0x08c: 0000000000000000     | 	.quad	0x0
+                            | 
+                            | 
+0x094:                      | main:
+0x094: 30f60000000000000000 | 	irmovq 	$0, %rsi
+0x09e: 30fc0700000000000000 | 	irmovq	$7, %r12
+0x0a8: 30fb0100000000000000 | 	irmovq	$1, %r11
+0x0b2: 70d800000000000000   | 	jmp	L9
+0x0bb:                      | L10:	
+0x0bb: 80e600000000000000   | 	call	switchv
+0x0c4:                      | jmploc:
+0x0c4: 206a                 | 	rrmovq	%rsi, %r10
+0x0c6: 60aa                 | 	addq	%r10, %r10
+0x0c8: 60aa                 | 	addq	%r10, %r10
+0x0ca: 60aa                 | 	addq	%r10, %r10
+0x0cc: 400a4400000000000000 | 	rmmovq	%rax, test(%r10)
+0x0d6: 60b6                 | 	addq	%r11, %rsi 
+0x0d8:                      | L9:	
+0x0d8: 206a                 | 	rrmovq	%rsi, %r10
+0x0da: 61ca                 | 	subq	%r12, %r10
+0x0dc: 71bb00000000000000   | 	jle	L10
+0x0e5: 90                   | 	ret
+                            | 
+                            | # switchv (long rsi)
+0x0e6:                      | switchv:
+0x0e6: 30f20800000000000000 | 	irmovq	$8, %rdx
+0x0f0: 6024                 | 	addq	%rdx, %rsp
+0x0f2: 30f20500000000000000 | 	irmovq 	$5, %rdx
+0x0fc: 2068                 | 	rrmovq 	%rsi, %r8
+0x0fe: 6128                 | 	subq	%rdx, %r8
+0x100: 765f01000000000000   | 	jg	L3
+0x109: 206d                 | 	rrmovq	%rsi, %r13
+0x10b: 60dd                 | 	addq	%r13, %r13
+0x10d: 60dd                 | 	addq 	%r13, %r13
+0x10f: 60dd                 | 	addq	%r13, %r13
+0x111: 509d1400000000000000 | 	mrmovq 	address(%r13),%r9
+0x11b: 40940000000000000000 | 	rmmovq 	%r9, (%rsp)
+0x125: 90                   | 	ret
+                            | 
+0x126:                      | L0:
+0x126: 30f0aa0a000000000000 | 	irmovq	$0xaaa, %rax
+0x130: 70c400000000000000   | 	jmp	jmploc
+0x139:                      | L1:
+0x139: 30f0bb0b000000000000 | 	irmovq 	$0xbbb, %rax
+0x143: 70c400000000000000   | 	jmp	jmploc
+0x14c:                      | L2:
+0x14c: 30f0cc0c000000000000 | 	irmovq 	$0xccc, %rax
+0x156: 70c400000000000000   | 	jmp	jmploc
+0x15f:                      | L3:
+0x15f: 30f0dd0d000000000000 | 	irmovq	$0xddd, %rax
+0x169: 70c400000000000000   | 	jmp	jmploc
+                            | 
+                            | #Stack starts here and grows to lower addresses
+0x300:                      | 		.pos 0x300
+0x300:                      | stack:

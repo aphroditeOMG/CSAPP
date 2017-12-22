@@ -1,0 +1,69 @@
+                            | # Execution begins at address 0
+0x000:                      |         .pos 0
+0x000: 30f40003000000000000 |         irmovq stack,%rsp
+0x00a: 805800000000000000   |         call main
+0x013: 00                   |         halt
+                            | 
+                            | #Array of 8 elements
+0x018:                      |         .align 8
+0x018:                      | array:
+0x018: 0a00000000000000     |         .quad 0x0a
+0x020: 0900000000000000     |         .quad 0x09
+0x028: 0500000000000000     |         .quad 0x05
+0x030: 0800000000000000     |         .quad 0x08
+0x038: 0200000000000000     |         .quad 0x02
+0x040: 0600000000000000     |         .quad 0x06
+0x048: 0400000000000000     |         .quad 0x04
+0x050: 4000000000000000     |         .quad 0x40
+                            | 
+0x058:                      | main:
+0x058: 30f71800000000000000 |         irmovq array ,%rdi
+0x062: 30f60800000000000000 |         irmovq $8 ,%rsi
+0x06c: 807600000000000000   |         call bubble_p
+0x075: 90                   |         ret
+                            | 
+                            | 
+                            |  
+                            | # bubble_p(long *data, long count)
+                            | # data in %rdi, count in %rsi;
+0x076:                      | bubble_p:
+0x076: 30fa0100000000000000 | 	irmovq 	1, %r10
+0x080: 30fb0800000000000000 | 	irmovq	8, %r11
+0x08a: 2069                 | 	rrmovq 	%rsi, %r9
+0x08c: 61a9                 | 	subq	%r10, %r9
+0x08e: 70fa00000000000000   | 	jmp	L2
+0x097:                      | L4:
+0x097: 2021                 | 	rrmovq 	%rdx, %rcx
+0x099: 6011                 | 	addq	%rcx, %rcx
+0x09b: 6011                 | 	addq	%rcx, %rcx
+0x09d: 6011                 | 	addq	%rcx, %rcx
+0x09f: 6071                 | 	addq	%rdi, %rcx
+0x0a1: 50810000000000000000 | 	mrmovq	(%rcx), %r8
+0x0ab: 50010800000000000000 | 	mrmovq	8(%rcx), %rax
+0x0b5: 208c                 | 	rrmovq	%r8, %r12
+0x0b7: 610c                 | 	subq	%rax, %r12
+0x0b9: 71d600000000000000   | 	jle	L3
+0x0c2: 40810800000000000000 | 	rmmovq 	%r8,8(%rcx)
+0x0cc: 40010000000000000000 | 	rmmovq	%rax,(%rcx)
+0x0d6:                      | L3:
+0x0d6: 60a2                 | 	addq	%r10, %rdx
+0x0d8: 70eb00000000000000   | 	jmp 	L5
+0x0e1:                      | L6:
+0x0e1: 30f20000000000000000 | 	irmovq	$0, %rdx
+0x0eb:                      | L5:
+0x0eb: 202c                 | 	rrmovq	%rdx, %r12
+0x0ed: 619c                 | 	subq	%r9, %r12
+0x0ef: 729700000000000000   | 	jl	L4
+0x0f8: 61a9                 | 	subq	%r10, %r9
+0x0fa:                      | L2:
+0x0fa: 76e100000000000000   | 	jg	L6
+                            | 
+0x103:                      | return:
+0x103: 90                   | 	ret
+                            | 
+                            | #Stack starts here and grows to lower addresses
+0x300:                      |                 .pos 0x300
+0x300:                      | stack:                                      	
+                            | 	
+                            | 	
+                            | 
